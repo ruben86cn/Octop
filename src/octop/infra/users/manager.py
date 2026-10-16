@@ -35,7 +35,7 @@ from octop.infra.users.preferences import (
     merge_preferences_json,
     validate_remote_browser_bookmarks,
 )
-from octop.infra.utils.locale import normalize_locale
+from octop.infra.utils.locale import normalize_ui_locale
 
 logger = logging.getLogger(__name__)
 _USERNAME_ALLOWED = re.compile(r"[^a-zA-Z0-9_.-]")
@@ -109,7 +109,7 @@ class UserManager:
                     username=row.username,
                     role=str(row.role),
                     display_name=row.display_name,
-                    locale=normalize_locale(row.locale),
+                    locale=normalize_ui_locale(row.locale),
                     permissions=list(row.permissions),
                 )
                 self._users[row.username] = user
@@ -134,7 +134,7 @@ class UserManager:
     ) -> User:
         if not username:
             raise OctopError(ErrorCode.USERNAME_TAKEN, "username must not be empty")
-        loc = normalize_locale(locale)
+        loc = normalize_ui_locale(locale)
         validate_password_policy(password)
         try:
             keys = validate_permission_keys(permissions or [])
@@ -323,7 +323,7 @@ class UserManager:
                     username=row.username,
                     role=str(row.role),
                     display_name=row.display_name,
-                    locale=normalize_locale(row.locale),
+                    locale=normalize_ui_locale(row.locale),
                     permissions=list(row.permissions),
                 )
                 self._users[row.username] = user
@@ -380,7 +380,7 @@ class UserManager:
                     username=row.username,
                     role=str(row.role),
                     display_name=row.display_name,
-                    locale=normalize_locale(row.locale),
+                    locale=normalize_ui_locale(row.locale),
                     permissions=list(row.permissions),
                 )
                 self._users[row.username] = cached
@@ -422,7 +422,7 @@ class UserManager:
             username=row.username,
             role=str(row.role),
             display_name=row.display_name,
-            locale=normalize_locale(row.locale),
+            locale=normalize_ui_locale(row.locale),
             permissions=list(row.permissions),
         )
         self._users[row.username] = user
@@ -501,7 +501,7 @@ class UserManager:
                 username=row.username,
                 role=str(row.role),
                 display_name=row.display_name,
-                locale=normalize_locale(row.locale),
+                locale=normalize_ui_locale(row.locale),
                 permissions=list(row.permissions),
             )
             self._users[row.username] = user
@@ -685,7 +685,7 @@ class UserManager:
         row = self._services.user_repo.get_by_username(username)
         if row is None:
             raise OctopError(ErrorCode.NOT_FOUND, "user not found")
-        loc = normalize_locale(locale)
+        loc = normalize_ui_locale(locale)
         self._services.user_repo.set_locale(row.id, loc)
         async with self._lock:
             current = self._users.get(username)
@@ -747,7 +747,7 @@ class UserManager:
             username=row.username,
             role=str(row.role),
             display_name=row.display_name,
-            locale=normalize_locale(row.locale),
+            locale=normalize_ui_locale(row.locale),
             permissions=list(row.permissions),
         )
         async with self._lock:

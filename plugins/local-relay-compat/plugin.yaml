@@ -1,0 +1,7 @@
+id: local-relay-compat
+version: 0.1.0
+name: Local relay compatibility
+description: Opt-in long streaming waits for a specific local Chat Completions relay
+icon: "🔌"
+kind: hook
+entry: main.py

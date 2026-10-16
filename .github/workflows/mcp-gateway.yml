@@ -1,0 +1,20 @@
+name: External MCP gateway
+on:
+  push:
+    paths: ['extensions/mcp-gateway/**', 'plugins/local-relay-compat/**', '.github/workflows/mcp-gateway.yml']
+  pull_request:
+    paths: ['extensions/mcp-gateway/**', 'plugins/local-relay-compat/**', '.github/workflows/mcp-gateway.yml']
+permissions:
+  contents: read
+jobs:
+  gateway:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.12'
+      - run: uv sync --frozen
+      - run: uv run ruff check extensions/mcp-gateway plugins/local-relay-compat
+      - run: uv run pytest -c extensions/mcp-gateway/pytest.ini extensions/mcp-gateway/tests -q
+      - run: uv run pytest tests/unit/agents/test_local_relay_plugin.py tests/unit/i18n tests/unit/test_user_locale.py tests/integration/test_preferences_api.py -q

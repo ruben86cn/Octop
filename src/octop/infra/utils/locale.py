@@ -19,6 +19,20 @@ def normalize_locale(raw: str | None) -> Locale:
     return "en"
 
 
+UiLocale = Literal["zh", "en", "ja"]
+
+
+def normalize_ui_locale(raw: str | None) -> UiLocale:
+    """Dashboard UI locale. Like ``normalize_locale`` but keeps ``ja``.
+
+    Server-generated text (errors, tool labels, prompts) only ships zh/en, so
+    backend code keeps calling ``normalize_locale`` which maps ``ja`` to ``en``.
+    """
+    if raw and raw.lower().startswith("ja"):
+        return "ja"
+    return normalize_locale(raw)
+
+
 def resolve_locale(
     *,
     user_locale: str | None = None,
@@ -81,3 +95,13 @@ def resolve_request_locale(request: object) -> Locale:
             first = str(raw).split(",")[0].strip().split(";")[0]
             return normalize_locale(first)
     return DEFAULT_LOCALE
+
+
+def resolve_request_ui_locale(request: object) -> UiLocale:
+    """Preserve Japanese when selecting an initial dashboard preference."""
+    headers = getattr(request, "headers", None)
+    if headers is not None:
+        raw = headers.get("accept-language") or headers.get("Accept-Language")
+        if raw:
+            return normalize_ui_locale(str(raw).split(",")[0].strip().split(";")[0])
+    return normalize_ui_locale(None)

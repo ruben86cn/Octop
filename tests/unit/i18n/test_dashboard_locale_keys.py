@@ -1,4 +1,4 @@
-"""Dashboard en.json / zh.json must keep the same leaf-key tree."""
+"""Dashboard en.json / zh.json / ja.json must keep the same leaf-key tree."""
 
 from __future__ import annotations
 
@@ -27,3 +27,28 @@ def test_dashboard_en_and_zh_share_leaf_keys() -> None:
     zh_keys = _leaf_keys(zh)
     assert en_keys - zh_keys == set()
     assert zh_keys - en_keys == set()
+
+
+def test_japanese_keys_and_interpolation_match_english() -> None:
+    import re
+
+    repo = Path(__file__).resolve().parents[3]
+    en = json.loads((repo / "dashboard/src/locales/en.json").read_text(encoding="utf-8"))
+    ja = json.loads((repo / "dashboard/src/locales/ja.json").read_text(encoding="utf-8"))
+    assert _leaf_keys(en) == _leaf_keys(ja)
+
+    def check(source: Any, translated: Any, path: tuple[str, ...] = ()) -> None:
+        if isinstance(source, dict):
+            assert isinstance(translated, dict) and source.keys() == translated.keys(), path
+            for name, value in source.items():
+                check(value, translated[name], (*path, name))
+        elif isinstance(source, str):
+            assert isinstance(translated, str), path
+            # Japanese places the frequency marker after the number (「10 分ごと」).
+            if path != ("memory", "extractConfig", "intervalPrefix"):
+                assert translated.strip(), path
+            assert sorted(re.findall(r"\{\{(.*?)\}\}", source)) == sorted(
+                re.findall(r"\{\{(.*?)\}\}", translated)
+            ), path
+
+    check(en, ja)

@@ -1,0 +1,10 @@
+.env
+*.sqlite3*
+*.db*
+*.log
+__pycache__/
+.pytest_cache/
+.venv/
+gateway_files/
+daemon-config.json
+caller_scope.json

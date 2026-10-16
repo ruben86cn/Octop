@@ -1,0 +1,426 @@
+{
+  "Octop · 中间件管理": {
+    "en": "Octop · Gateway administration",
+    "ja": "Octop · ゲートウェイ管理"
+  },
+  "Token 已创建": {
+    "en": "Token created",
+    "ja": "Token を作成しました"
+  },
+  "Token 由系统安全随机生成，完整密钥只在创建成功时显示一次。": {
+    "en": "Tokens are securely generated at random. The full secret is shown only once, after creation.",
+    "ja": "Token は安全な乱数で生成します。完全な値は作成時に一度だけ表示します。"
+  },
+  "Token 管理": {
+    "en": "Token management",
+    "ja": "Token 管理"
+  },
+  "◈　授权与身份": {
+    "en": "◈ Permissions and identity",
+    "ja": "◈ 権限と利用者情報"
+  },
+  "中间件授权控制台": {
+    "en": "Gateway access console",
+    "ja": "ゲートウェイ権限管理"
+  },
+  "为每个使用者配置身份、可用专家与反馈权限。": {
+    "en": "Configure each caller's identity, experts and feedback access.",
+    "ja": "利用者ごとに身元情報、利用可能なエキスパート、フィードバック権限を設定します。"
+  },
+  "使用现有 Octop 管理员账号": {
+    "en": "Use your existing Octop administrator account",
+    "ja": "既存の Octop 管理者アカウントを使用"
+  },
+  "使用者身份": {
+    "en": "Caller identity",
+    "ja": "利用者情報"
+  },
+  "例如：先给结论再给依据；解释关键实验条件，不披露与项目无关的内部细节。": {
+    "en": "For example: lead with the conclusion and evidence; explain key conditions without unrelated internal details.",
+    "ja": "例：結論と根拠を先に述べ、重要な条件を説明する。案件に無関係な内部情報は開示しない。"
+  },
+  "例如：合作方研发助手": {
+    "en": "For example: Partner research assistant",
+    "ja": "例：協力先の研究アシスタント"
+  },
+  "例如：研发部": {
+    "en": "For example: Research department",
+    "ja": "例：研究開発部"
+  },
+  "例如：项目负责人、研究员": {
+    "en": "For example: Project lead, Researcher",
+    "ja": "例：プロジェクト責任者、研究員"
+  },
+  "保存修改": {
+    "en": "Save changes",
+    "ja": "変更を保存"
+  },
+  "保存后，对后续调用生效。": {
+    "en": "Changes apply to subsequent calls.",
+    "ja": "変更は以後の呼び出しに適用されます。"
+  },
+  "允许回流": {
+    "en": "Allow feedback",
+    "ja": "フィードバックを許可"
+  },
+  "公司或机构名称": {
+    "en": "Company or organization name",
+    "ja": "会社・機関名"
+  },
+  "公开访客 · 面向公开信息": {
+    "en": "Public visitor · public information",
+    "ja": "一般利用者 · 公開情報"
+  },
+  "公开访客": {
+    "en": "Public visitor",
+    "ja": "一般利用者"
+  },
+  "关闭后，不能调用回流专家或提交 MCP 反馈。": {
+    "en": "When off, the caller cannot use the feedback expert or submit MCP feedback.",
+    "ja": "オフの場合、フィードバック担当の呼び出しも MCP フィードバックの送信もできません。"
+  },
+  "关闭编辑": {
+    "en": "Close editor",
+    "ja": "編集を閉じる"
+  },
+  "内部成员 · 面向职责需要": {
+    "en": "Internal member · role-related needs",
+    "ja": "内部メンバー · 職務上の必要範囲"
+  },
+  "内部成员": {
+    "en": "Internal member",
+    "ja": "内部メンバー"
+  },
+  "创建后显示随机生成的 Token。": {
+    "en": "The randomly generated token appears after creation.",
+    "ja": "作成後にランダム生成した Token を表示します。"
+  },
+  "刷新": {
+    "en": "Refresh",
+    "ja": "更新"
+  },
+  "反馈回流": {
+    "en": "Feedback",
+    "ja": "フィードバック"
+  },
+  "取消": {
+    "en": "Cancel",
+    "ja": "キャンセル"
+  },
+  "只允许调用勾选的专家。回流专家由下方开关单独控制。": {
+    "en": "Only selected experts are allowed. The feedback expert is controlled separately below.",
+    "ja": "選択したエキスパートのみ呼び出せます。フィードバック担当は下のスイッチで個別に制御します。"
+  },
+  "可授权专家": {
+    "en": "Available experts",
+    "ja": "権限を付与できるエキスパート"
+  },
+  "可调用专家": {
+    "en": "Allowed experts",
+    "ja": "利用可能なエキスパート"
+  },
+  "回复尺度与表达要求": {
+    "en": "Response scope and style",
+    "ja": "回答の詳しさ・表現の指定"
+  },
+  "回流": {
+    "en": "Feedback",
+    "ja": "フィードバック"
+  },
+  "在 MCP 客户端中使用此 Token 作为 Bearer 凭证。": {
+    "en": "Use this token as the Bearer credential in your MCP client.",
+    "ja": "MCP クライアントの Bearer 認証情報としてこの Token を使用してください。"
+  },
+  "基本信息": {
+    "en": "Basic information",
+    "ja": "基本情報"
+  },
+  "复制 Token": {
+    "en": "Copy token",
+    "ja": "Token をコピー"
+  },
+  "外部合作方 · 面向合作事项": {
+    "en": "External partner · collaboration scope",
+    "ja": "外部協力者 · 協力案件の範囲"
+  },
+  "外部合作方": {
+    "en": "External partner",
+    "ja": "外部協力者"
+  },
+  "多个角色用逗号或顿号分隔。": {
+    "en": "Separate roles with commas.",
+    "ja": "複数の役割はカンマまたは読点で区切ってください。"
+  },
+  "密码": {
+    "en": "Password",
+    "ja": "パスワード"
+  },
+  "已保存，关闭": {
+    "en": "Saved, close",
+    "ja": "保存済み、閉じる"
+  },
+  "已停用": {
+    "en": "Inactive",
+    "ja": "無効"
+  },
+  "已允许调用回流专家，并通过 MCP 提交反馈。": {
+    "en": "The feedback expert and MCP feedback submission are allowed.",
+    "ja": "フィードバック担当の呼び出しと MCP フィードバックの送信を許可しています。"
+  },
+  "已关闭": {
+    "en": "Off",
+    "ja": "オフ"
+  },
+  "已复制": {
+    "en": "Copied",
+    "ja": "コピーしました"
+  },
+  "已开启回流": {
+    "en": "Feedback enabled",
+    "ja": "フィードバック有効"
+  },
+  "已开启": {
+    "en": "On",
+    "ja": "オン"
+  },
+  "已撤销": {
+    "en": "Revoked",
+    "ja": "失効済み"
+  },
+  "已过期": {
+    "en": "Expired",
+    "ja": "期限切れ"
+  },
+  "已选中，请手动复制": {
+    "en": "Selected; please copy manually",
+    "ja": "選択しました。手動でコピーしてください"
+  },
+  "开启后可针对已授权专家提交反馈；实际调整仍需管理员审批。": {
+    "en": "When enabled, feedback can target allowed experts. Applying changes still requires administrator approval.",
+    "ja": "有効にすると、権限のあるエキスパートへのフィードバックを送信できます。変更の実行には引き続き管理者の承認が必要です。"
+  },
+  "授权与身份": {
+    "en": "Permissions and identity",
+    "ja": "権限と利用者情報"
+  },
+  "授权名称 / 状态": {
+    "en": "Authorization / status",
+    "ja": "権限名 / 状態"
+  },
+  "授权名称": {
+    "en": "Authorization name",
+    "ja": "権限名"
+  },
+  "授权已撤销。": {
+    "en": "Authorization revoked.",
+    "ja": "権限を失効させました。"
+  },
+  "搜索授权名称…": {
+    "en": "Search authorization names…",
+    "ja": "権限名を検索…"
+  },
+  "搜索授权名称": {
+    "en": "Search authorization names",
+    "ja": "権限名を検索"
+  },
+  "操作失败，请重试。": {
+    "en": "Operation failed. Please retry.",
+    "ja": "操作に失敗しました。再試行してください。"
+  },
+  "操作": {
+    "en": "Actions",
+    "ja": "操作"
+  },
+  "新建 Token": {
+    "en": "New token",
+    "ja": "Token を新規作成"
+  },
+  "有效授权": {
+    "en": "Active authorizations",
+    "ja": "有効な権限"
+  },
+  "有效期至": {
+    "en": "Expires at",
+    "ja": "有効期限"
+  },
+  "有效": {
+    "en": "Active",
+    "ja": "有効"
+  },
+  "未设置组织": {
+    "en": "No organization set",
+    "ja": "組織未設定"
+  },
+  "未授权普通专家": {
+    "en": "No regular experts allowed",
+    "ja": "通常エキスパートの権限なし"
+  },
+  "模型将结合身份和任务调整回复；身份档次不会自动扩大专家权限。": {
+    "en": "The model adjusts responses to identity and task. Identity tiers do not expand expert access.",
+    "ja": "モデルは利用者情報とタスクに応じて回答を調整します。身分区分によってエキスパート権限が拡大することはありません。"
+  },
+  "每个连接，都有明确的身份。": {
+    "en": "Every connection has an identity.",
+    "ja": "接続ごとに利用者情報を設定。"
+  },
+  "每位专家，都有清晰的授权。": {
+    "en": "Every expert has explicit permissions.",
+    "ja": "エキスパートごとに権限を明確化。"
+  },
+  "没有匹配的授权记录。": {
+    "en": "No matching authorizations.",
+    "ja": "一致する権限がありません。"
+  },
+  "生成 Token": {
+    "en": "Generate token",
+    "ja": "Token を生成"
+  },
+  "留空表示长期有效，可随时撤销。": {
+    "en": "Leave blank for no expiry. Revoke at any time.",
+    "ja": "空欄の場合は無期限です。いつでも失効できます。"
+  },
+  "登录管理台": {
+    "en": "Sign in to console",
+    "ja": "管理画面にログイン"
+  },
+  "管理员登录": {
+    "en": "Administrator sign-in",
+    "ja": "管理者ログイン"
+  },
+  "管理员": {
+    "en": "Administrator",
+    "ja": "管理者"
+  },
+  "管理层 · 面向业务决策": {
+    "en": "Management · business decisions",
+    "ja": "管理職 · 業務上の意思決定"
+  },
+  "管理层": {
+    "en": "Management",
+    "ja": "管理職"
+  },
+  "组织角色": {
+    "en": "Organizational roles",
+    "ja": "組織内の役割"
+  },
+  "组织": {
+    "en": "Organization",
+    "ja": "組織"
+  },
+  "编辑授权": {
+    "en": "Edit authorization",
+    "ja": "権限を編集"
+  },
+  "编辑": {
+    "en": "Edit",
+    "ja": "編集"
+  },
+  "撤销": {
+    "en": "Revoke",
+    "ja": "失効"
+  },
+  "自然语言身份描述": {
+    "en": "Identity description in natural language",
+    "ja": "自然言語による利用者の説明"
+  },
+  "至 ": {
+    "en": "Until ",
+    "ja": "期限："
+  },
+  "说明使用者的背景、职责、专业程度和知悉范围。例如：负责合作项目技术核验，有专业背景，但没有内部商业资料授权。": {
+    "en": "Describe background, responsibilities, expertise and information scope. For example: a technical reviewer with professional knowledge but no access to internal commercial data.",
+    "ja": "背景、職責、専門性、知る必要のある範囲を説明してください。例：協力案件の技術検証担当。専門知識はあるが、内部の商業情報へのアクセス権限はない。"
+  },
+  "请现在复制并妥善保存。关闭后无法再次查看完整 Token。": {
+    "en": "Copy and store it now. The full token cannot be viewed again after closing.",
+    "ja": "今すぐコピーして安全に保存してください。閉じた後は完全な Token を再表示できません。"
+  },
+  "账号": {
+    "en": "Username",
+    "ja": "アカウント"
+  },
+  "身份与权限修改后，对后续调用生效。": {
+    "en": "Identity and permission changes apply to subsequent calls.",
+    "ja": "利用者情報と権限の変更は、以後の呼び出しに適用されます。"
+  },
+  "身份与权限已保存。": {
+    "en": "Identity and permissions saved.",
+    "ja": "利用者情報と権限を保存しました。"
+  },
+  "身份档次": {
+    "en": "Identity tier",
+    "ja": "利用者区分"
+  },
+  "身份": {
+    "en": "Identity",
+    "ja": "利用者情報"
+  },
+  "还没有授权记录。新建一个 Token，开始配置使用者身份。": {
+    "en": "No authorizations yet. Create a token to configure a caller.",
+    "ja": "権限はまだありません。Token を作成し、利用者情報を設定してください。"
+  },
+  "连接智能体，管理边界。": {
+    "en": "Connect agents, manage access.",
+    "ja": "エージェントを接続し、アクセスを管理。"
+  },
+  "退出": {
+    "en": "Sign out",
+    "ja": "ログアウト"
+  },
+  "部门": {
+    "en": "Department",
+    "ja": "部署"
+  },
+  "长期有效": {
+    "en": "No expiry",
+    "ja": "無期限"
+  },
+  "（可选）": {
+    "en": "(optional)",
+    "ja": "（任意）"
+  },
+  "＋ 新建 Token": {
+    "en": "＋ New token",
+    "ja": "＋ Token を新規作成"
+  },
+  "输入格式不正确，请检查身份、专家和有效期。": {
+    "en": "Invalid input. Check identity, experts and expiry.",
+    "ja": "入力形式が正しくありません。利用者情報、エキスパート、有効期限を確認してください。"
+  },
+  "Octop 暂时无法连接，请稍后重试。": {
+    "en": "Octop is unavailable. Please retry later.",
+    "ja": "Octop に接続できません。後で再試行してください。"
+  },
+  "请求来源不匹配，请刷新管理页面。": {
+    "en": "Request origin does not match. Refresh this page.",
+    "ja": "リクエスト元が一致しません。管理ページを更新してください。"
+  },
+  "登录失败次数过多，请 5 分钟后重试。": {
+    "en": "Too many failed attempts. Retry in 5 minutes.",
+    "ja": "ログイン失敗回数が多すぎます。5 分後に再試行してください。"
+  },
+  "账号或密码错误。": {
+    "en": "Incorrect username or password.",
+    "ja": "アカウントまたはパスワードが正しくありません。"
+  },
+  "需要 Octop 管理员账号。": {
+    "en": "An Octop administrator account is required.",
+    "ja": "Octop の管理者アカウントが必要です。"
+  },
+  "请登录管理员账号。": {
+    "en": "Sign in with an administrator account.",
+    "ja": "管理者アカウントでログインしてください。"
+  },
+  "会话校验失败，请刷新页面。": {
+    "en": "Session validation failed. Refresh this page.",
+    "ja": "セッションの検証に失敗しました。ページを更新してください。"
+  },
+  "管理员会话已失效，请重新登录。": {
+    "en": "Administrator session expired. Sign in again.",
+    "ja": "管理者セッションが無効です。再度ログインしてください。"
+  },
+  "撤销“${token.name}”的 Token？撤销后不能继续调用。": {
+    "en": "Revoke the token for “${token.name}”? Subsequent calls will be denied.",
+    "ja": "「${token.name}」の Token を失効させますか？以後の呼び出しは拒否されます。"
+  }
+}
