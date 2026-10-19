@@ -1,8 +1,9 @@
-# Fork customizations on 1.0.2b8
+# Fork customizations on 1.0.2
 
-Base: `f79015b078c4d5d4c309a1bf6f3cd39ac06cc18f` (official main, B8 plus
-knowledge-work expert templates, PR #2021). This branch keeps B8 as an ancestor;
-no older source tree or dependency downgrade replaces it.
+Original base: `f79015b078c4d5d4c309a1bf6f3cd39ac06cc18f` (official main, B8 plus
+knowledge-work expert templates, PR #2021). Updated by merging official `main`
+`dd9dce4` (v1.0.2) on 2026-10-19. Both the original customization commit and
+the official release remain ancestors; no dependency downgrade is applied.
 
 ## Contents
 
@@ -46,7 +47,7 @@ and rerunning the checks. In particular, inspect upstream changes to locale
 normalization, native chat frames and model middleware APIs before deployment.
 Do not replace `src/octop` or a newer harness with copied old installations.
 
-### Local verification record
+### Original B8 verification record
 
 - Backend `make all PYTEST_JOBS=4`: passed (4,760 passed / 31 skipped at the
   full-suite checkpoint); the final setup-header regression was also checked
@@ -60,3 +61,33 @@ Do not replace `src/octop` or a newer harness with copied old installations.
   has 6 failed files (6 failed tests plus 3 suite-loading failures) on both the
   untouched `f79015b0` baseline and this branch; ESLint has the same 3 errors and
   68 warnings. These unrelated failures were not hidden or changed here.
+
+### 1.0.2 upstream merge (2026-10-19)
+
+- Merged official `main` at `dd9dce4` (49 incoming commits) into
+  `feature/mcp-authorization-ja-b8`; recovery branch:
+  `backup/mcp-ja-before-upstream-20261019` at `93731c5`.
+- Preserved the scoped MCP gateway, feedback approval workflow and optional
+  relay plugin unchanged. The upstream agent MCP gateway remains a separate
+  feature; it does not replace the external gateway or its authorization data.
+- Updated 186 Japanese strings for upstream changes (decision models, manual
+  memory, one-shot scheduling, navigation, exports and DingTalk). Locale keys
+  and interpolation placeholders match the updated English bundle.
+- Added `tests/integration/test_fork_gateway_chat.py`: actual Octop WebSocket
+  routing with a simulated harness response, asserting final-answer selection
+  and idle-turn confirmation for English and Japanese requests. Included in
+  the custom gateway CI workflow.
+- Custom backend regression selection: 109 passed. External gateway: 75 passed;
+  extension/plugin Ruff check passed. Frontend locale preferences: 7 passed.
+- TypeScript and Vite production build passed.
+- Full frontend suite: 1,397 passed, 6 failed, with 3 additional suite-loading
+  failures (6 failed files total). Unmodified official `dd9dce4` reproduces
+  exactly the same failures (1,394 passed). ESLint likewise reports the same
+  3 errors and 70 warnings in both trees. These upstream failures are outside
+  this merge's scope.
+- No running installation, production database, provider credentials or service
+  configuration was changed. Real provider calls and deployment are not covered
+  by these isolated checks.
+- Full backend ship gate `make all PYTEST_JOBS=4` passed: Ruff, mypy (597
+  source files), and 5,033 tests passed / 35 skipped. The two new gateway
+  integration cases were additionally included in the 109-test custom run.
