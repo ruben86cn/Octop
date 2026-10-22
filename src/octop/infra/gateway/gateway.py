@@ -12,13 +12,13 @@ from typing import TYPE_CHECKING, Any
 
 from octop_gateway.channel import ChannelCredentialsError
 from octop_gateway.channels import ChannelKind
-from octop_gateway.manager import ChannelManager
 from octop_gateway.models import ChannelSubject
 
 from octop.i18n import channel_probe_incomplete, channel_runtime_reason, tr
 from octop.infra.db.repos.channels import ChannelRow
 from octop.infra.db.repos.sessions import SessionRow
 from octop.infra.errors import ErrorCode, OctopError
+from octop.infra.gateway.channel_manager import ChannelManager
 from octop.infra.gateway.cli import CLI_CHANNEL_ID, CliChannel, CliHub
 from octop.infra.gateway.history_backfill import HistoryBackfillQueue
 from octop.infra.gateway.process import media_backend_for_agent
