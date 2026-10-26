@@ -1,9 +1,10 @@
-# Fork customizations on 1.0.2
+# Fork customizations on 1.0.3b1
 
 Original base: `f79015b078c4d5d4c309a1bf6f3cd39ac06cc18f` (official main, B8 plus
 knowledge-work expert templates, PR #2021). Updated by merging official `main`
 `dd9dce4` (v1.0.2) on 2026-10-19. Both the original customization commit and
-the official release remain ancestors; no dependency downgrade is applied.
+the official release remain ancestors. The 2026-10-26 merge adds official main
+`890111b` (v1.0.3b1); see the verification record below.
 
 ## Contents
 
@@ -91,3 +92,27 @@ Do not replace `src/octop` or a newer harness with copied old installations.
 - Full backend ship gate `make all PYTEST_JOBS=4` passed: Ruff, mypy (597
   source files), and 5,033 tests passed / 35 skipped. The two new gateway
   integration cases were additionally included in the 109-test custom run.
+
+### 1.0.3b1 upstream merge (2026-10-26)
+
+- Merged official `main` at `890111b` (35 incoming commits, beta release)
+  into the custom branch, retaining `591e33c` and all prior custom history.
+  Recovery branch: `backup/custom-before-upstream-20261026`.
+- Preserved the external MCP gateway, feedback approvals, optional local relay,
+  and Feishu per-client event-loop isolation without changing their code.
+- Added 167 Japanese strings, updated 23 existing translations, and removed one
+  retired key to match upstream resource sharing, user groups, model settings,
+  storage access, and text assistance. Key and placeholder parity is checked.
+- Updated development dependencies from the upstream lockfile, including
+  octop-harness 1.0.5. This merge does not install into the running service or
+  migrate production databases; deployment needs a separate runtime backup and
+  dependency/migration check (upstream database schema is now 22).
+- Custom regressions: 118 passed (Feishu isolation, relay compatibility, locale
+  persistence/key parity, and external-gateway WebSocket answer contract).
+  External MCP gateway: 75 passed; extension/plugin Ruff check passed.
+- Frontend full suite: 1,452 passed, 8 failed tests, and 3 suite-loading failures
+  (8 failed files). An untouched `890111b` checkout reproduces the exact same
+  failure names (1,449 passed). ESLint in both trees reports the same 2 errors
+  and 71 warnings. These upstream baseline failures remain outside this merge.
+- Full backend `make all PYTEST_JOBS=4` passed: Ruff, mypy (613 source files),
+  5,184 tests passed / 35 skipped. TypeScript and Vite production build passed.

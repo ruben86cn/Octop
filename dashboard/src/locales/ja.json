@@ -222,7 +222,13 @@
     "LOCAL_DOWNLOAD_UNAVAILABLE": "ホストのダウンロードフォルダーへの保存は、このコンピューターで Octop を開いている場合のみ利用できます。",
     "SKILL_PACKAGE_COPY_DENIED": "このスキルパッケージの作成者は、スキルのコピーを無効にしています。",
     "SKILL_PACKAGE_DOWNLOAD_DENIED": "このスキルパッケージのダウンロードは無効になっています。",
-    "SKILL_PACKAGE_LOCKED": "このスキルはロックされたスキルパッケージからコピーされたため、ワークスペースで編集できません。"
+    "SKILL_PACKAGE_LOCKED": "このスキルはロックされたスキルパッケージからコピーされたため、ワークスペースで編集できません。",
+    "EXPERT_TEMPLATE_NOT_FOUND": "エキスパートのテンプレートが見つかりません。",
+    "DEFAULT_EXPERT_FAILED": "デフォルトのエキスパートを作成できませんでした。",
+    "THREAD_TURN_ACTIVE": "返信を生成中です。停止してから、この会話を削除してください。",
+    "RESOURCE_NOT_ALLOWED": "このリソースへのアクセス権がありません。",
+    "USER_GROUP_ID_INVALID": "グループIDは英数字・アンダースコア・ハイフンの3～64文字で、先頭と末尾は英数字にしてください。",
+    "USER_GROUP_ID_TAKEN": "このグループIDは使用されています。"
   },
   "nav": {
     "chat": "会話",
@@ -312,13 +318,13 @@
     "subtitle": "再利用できるスキルパッケージを作成・管理し、スキルを追加してエキスパートにマウントします",
     "createPackage": "スキルパッケージを作成",
     "editPackage": "スキルパッケージを編集",
-    "createPackageHint": "スキルパッケージはスキルを共有するコレクションです。作成後、スキルを追加し、パッケージをエージェントにマウントします。",
+    "createPackageHint": "スキルパッケージは再利用可能なスキルをまとめたものです。作成後にスキルを追加し、エージェントに追加してください。他のユーザーにも利用させる場合は共有を有効にします。",
     "packageName": "パッケージ名",
     "packageNameRequired": "パッケージ名を入力してください",
     "packageNamePlaceholder": "例: リサーチツールキット",
     "packageDescription": "説明",
     "packageDescriptionPlaceholder": "このパッケージの簡単な説明 (任意)",
-    "iconName": "プリセットアイコン",
+    "iconName": "アバター",
     "iconNamePlaceholder": "アイコンを選択",
     "iconUrl": "カスタムアイコン URL",
     "iconUrlPlaceholder": "https://example.com/icon.png",
@@ -333,7 +339,7 @@
     "emptyGuideStepHow": "使い方",
     "emptyGuideStepHowDetail": "パッケージを作成し、スキルを追加するかマーケットからインポートして、パッケージをエキスパートにマウントします。それらのスキルがチャットで利用可能になります。",
     "emptyGuideStepShare": "共有について",
-    "emptyGuideStepShareDetail": "パッケージはこのインスタンスのサインイン済みユーザーに表示されます。他のユーザーはマウントできますが、編集・削除できるのは作成者のみです。",
+    "emptyGuideStepShareDetail": "パッケージは初期状態では非公開です。共有すると、このインスタンスにログインした他のユーザーが閲覧・追加できます。編集・削除できるのは作成者のみです。",
     "selectPackage": "スキルパッケージを選択してスキルを表示",
     "backToList": "一覧に戻る",
     "noDescription": "説明なし",
@@ -365,12 +371,19 @@
     "collapseListPanel": "一覧を折りたたむ",
     "expandListPanel": "一覧を展開",
     "copyPolicy": "コピーポリシー",
-    "copyPolicyHint": "作成者以外のユーザーがこのパッケージのスキルを自分のエージェントにコピーできるかどうかを制御します。読み取り専用コピーはダッシュボードとワークスペースの HTTP 書き込みで強制されます。エージェントツールによる書き込みには引き続きハーネス側の対応が必要です (#770)。",
+    "copyPolicyHint": "既にこのパッケージを利用できるユーザー（自分の他のエキスパートを含む）がスキルをワークスペースにコピーできるかを制御します。読み取り専用コピーの制限はダッシュボードとワークスペースHTTP書き込みに適用されます。エージェントのツール書き込みにはharness側の対応が必要です（#770）。",
     "copyPolicySnapshot": "自由にコピー",
     "copyPolicyLock": "コピー (コンソールは読み取り専用)",
     "copyPolicyDeny": "コピー不可",
     "allowDownload": "ダウンロードを許可",
-    "allowDownloadHint": "オフの場合も他のユーザーは閲覧・マウントできますが、ZIPとしてエクスポートできません。作成者と管理者は引き続きダウンロードできます。"
+    "allowDownloadHint": "無効にすると、このパッケージを閲覧できる他のユーザーはZIPでエクスポートできません。作成者と管理者は引き続きダウンロードできます。",
+    "iconUrlInvalid": "有効な http(s) のアイコンURLを入力してください",
+    "iconUrlTooLong": "アイコンURLが長すぎます",
+    "avatarUploadLater": "パッケージを作成しました。アバターをアップロードできなかったため、編集時に追加してください。",
+    "shared": "他のユーザーと共有",
+    "sharedHint": "有効にすると、このインスタンスにログインした他のユーザーがパッケージを閲覧・追加できます。編集できるのは作成者のみです。無効時は自分だけが利用できます。",
+    "visibilityHint": "自分のみ：作成者と管理者が利用できます。全員：ログインしたユーザーが閲覧・追加できますが、編集はできません。ユーザーグループ：共有を有効にしてから、対象グループを指定します。",
+    "sharedBadge": "共有"
   },
   "knowledgeBases": {
     "title": "ナレッジベース",
@@ -463,7 +476,7 @@
     "previewFailed": "ドキュメントのプレビューに失敗しました",
     "downloadOriginal": "ダウンロード",
     "downloadOriginalFailed": "ダウンロードに失敗しました",
-    "icon": "アイコン",
+    "icon": "アバター",
     "iconPlaceholder": "ナレッジベースのアイコンを選択",
     "iconLabels": {
       "book-open": "人文科学",
@@ -574,7 +587,8 @@
     "enable": "有効にする",
     "featureEnabled": "ナレッジベースを有効にしました",
     "featureDisabled": "ナレッジベースを無効にしました",
-    "featureSaveFailed": "ナレッジベース機能の更新に失敗しました"
+    "featureSaveFailed": "ナレッジベース機能の更新に失敗しました",
+    "avatarUploadLater": "ナレッジベースを作成しました。アバターをアップロードできなかったため、編集時に追加してください。"
   },
   "setupWizard": {
     "title": "セットアップウィザード",
@@ -688,6 +702,12 @@
         },
         "kimi": {
           "desc": "Web 検索機能を内蔵した Moonshot AI"
+        },
+        "deepseek": {
+          "desc": "検索結果のランキング、要約、出典リンクを備えたAI検索"
+        },
+        "yuanbao": {
+          "desc": "公開ウェブとTencentのコンテンツを検索するTencent Yuanbao検索"
         }
       },
       "test": "接続をテスト",
@@ -820,7 +840,7 @@
       "proactive": "プロアクティブプッシュ"
     },
     "myExperts": "マイエキスパート",
-    "expertLibrary": "組み込みエキスパート",
+    "expertLibrary": "組み込みエキスパートテンプレート",
     "expertMarket": "エキスパートマーケット",
     "viewCard": "カード",
     "viewTable": "テーブル",
@@ -844,7 +864,7 @@
     "searchEmpty": "一致するエキスパートがありません",
     "totalLibrary": "{{count}} 人の組み込みエキスパート",
     "totalMarket": "{{count}} 人のマーケットエキスパート",
-    "addFromLibrary": "+ 組み込みから追加",
+    "addFromLibrary": "＋ 組み込みテンプレートから新規作成",
     "newExpert": "新規エキスパート",
     "emptyMyExperts": "エキスパートはまだありません",
     "emptyMyExpertsHint": "新しいエキスパートを作成するか、組み込みエキスパートまたはエキスパートマーケットのテンプレートを選択してください。",
@@ -1159,7 +1179,11 @@
     "mbtiBtn": "MBTI",
     "channelsBtn": "チャネル",
     "memoryBtn": "メモリ",
-    "openChat": "チャット"
+    "openChat": "チャット",
+    "visibilityHint": "自分のみ：自分と管理者が利用できます。全員：他のログイン済みユーザーも会話できますが、設定は変更できません。ユーザーグループ：共有を有効にしてから、対象グループを指定します。",
+    "filterEmpty": "現在の条件に一致する項目はありません",
+    "addCloudExpert": "クラウドエキスパートを追加",
+    "addCloudExpertHint": "クラウド連携を開いて、別のOctopのエキスパートを追加します"
   },
   "subagents": {
     "catalogTitle": "サブエージェントを管理",
@@ -1258,8 +1282,7 @@
   },
   "chat": {
     "sharedExpert": {
-      "banner": "共有エキスパート · 提供元: {{name}}",
-      "flag": "共有"
+      "banner": "共有エキスパート · 提供元: {{name}}"
     },
     "remoteExpert": {
       "banner": "ピアエキスパート · 経由: “{{name}}”。チャット履歴はエキスパートのインスタンス上に残ります。",
@@ -1793,7 +1816,8 @@
     "historyRetry": "再試行",
     "creatingSession": "セッションを作成中…",
     "resizePopup": "ウィンドウのサイズを変更",
-    "unreadMessages": "未読メッセージ"
+    "unreadMessages": "未読メッセージ",
+    "expertListHiddenCollapse": "非表示のエキスパートを折りたたむ"
   },
   "tools": {
     "unknown": "不明なツール",
@@ -1845,7 +1869,9 @@
     "generate_image": "画像を生成",
     "generate_video": "動画を生成",
     "bilibili_search_anime": "Bilibili でアニメを検索",
-    "search_arxiv": "arXiv論文を検索"
+    "search_arxiv": "arXiv論文を検索",
+    "deepseek_search": "DeepSeekウェブ検索",
+    "yuanbao_search": "Yuanbaoウェブ検索"
   },
   "toolSettings": {
     "title": "ツール設定",
@@ -2263,7 +2289,15 @@
     "table": {
       "actions": "操作",
       "enabled": "有効"
-    }
+    },
+    "kindPackage": "スキルパッケージ",
+    "presentationSection": "画面上の表示",
+    "presentationHint": "表示言語ごとに入力します。空欄の場合はスキル名と説明を使用します。",
+    "presentationTabZh": "中文",
+    "presentationTabEn": "English",
+    "presentationDisplayName": "表示名",
+    "presentationSummary": "短い説明",
+    "packagesLostAccess": "利用できなくなった追加済みパッケージをスキップしました：{{ids}}"
   },
   "cronJobs": {
     "title": "定期タスク(cron)",
@@ -3382,7 +3416,7 @@
     "ollamaNotRunning": "Ollama サービスが実行されていません",
     "testUseSavedConfig": "保存済みの設定を使用します",
     "pageTitle": "モデル",
-    "pageSubtitle": "会話、画像・動画生成、音声、判断モデル、検索エンジンをまとめて管理します。",
+    "pageSubtitle": "会話、埋め込み、画像・動画生成、音声、判断、検索のサービスをまとめて管理します。",
     "chatModelsTab": "会話モデル",
     "generationModelsTab": "生成モデル",
     "voiceModelsTab": "音声モデル",
@@ -3448,7 +3482,7 @@
     "decisionOffHint": "無効の間はスキル・ツール・メンバーを変更しません。有効にすると適用範囲を選べます。",
     "decisionScope": "適用範囲",
     "decisionSkillsDesc": "関連するスキルのみを会話モデルに渡します",
-    "decisionToolsDesc": "ツールが多い場合に、今回不要なものを除外します",
+    "decisionToolsDesc": "今回不要なプラグイン・MCPツールを除外します。組み込みのファイル配信、ブラウザー、スクリーンショットは引き続き利用できます。",
     "decisionTeamDesc": "今回の割り当て一覧に関連するメンバーのみを残します",
     "decisionMore": "保持スコアとツール数",
     "decisionThresholdHint": "各項目を0〜1で評価し、基準以上の項目を残します。右に動かすほど厳しくなります。基準にわずかに届かない項目も残します。",
@@ -3582,7 +3616,51 @@
     "onnxCacheDir": "キャッシュ: {{dir}}",
     "onnxLocalCached": "キャッシュ済みモデル",
     "onnxQuickDownload": "カタログからクイックダウンロード…",
-    "defaultModelExtra": "接続テストで使用するモデル。空欄の場合は最初の有効なモデルを使用します"
+    "defaultModelExtra": "接続テストで使用するモデル。空欄の場合は最初の有効なモデルを使用します",
+    "groupAccessTitle": "グループのアクセス権",
+    "groupAccessCount": "{{count}} 個のモデルがグループ限定",
+    "groupAccessHint": "モデルはユーザーグループで制限しない限り全員が利用できます。管理者は常に利用できます。",
+    "apiMode": "OpenAI APIモード",
+    "apiModeHint": "プロバイダーが対応する生成エンドポイントを選択します。既存の設定ではChat Completionsを使用します。",
+    "apiModeChatCompletions": "Chat Completions (/v1/chat/completions)",
+    "apiModeResponses": "Responses (/v1/responses)",
+    "apiFallback": "プロトコルのフォールバック",
+    "apiFallbackHint": "任意設定で、初期状態は無効です。プロバイダーがResponses非対応を明示した場合のみ、Chat Completionsで再試行します。認証、レート制限、タイムアウト、サーバーエラー時にはプロトコルを切り替えて再試行しません。",
+    "apiFallbackNone": "なし（推奨）",
+    "apiFallbackChatCompletions": "Chat Completionsにフォールバック",
+    "apiFallbackTestUsed": "Responsesは利用できません。Chat Completionsへの切り替え後に接続できました。",
+    "embeddingModelsTab": "埋め込みモデル",
+    "embeddingIntro": "ナレッジベースや検索用の埋め込みモデルを設定します。チャット用モデル一覧には表示されません。",
+    "embeddingLocalSection": "ローカルONNX",
+    "embeddingCloudSection": "クラウドサービス",
+    "embeddingServicesSection": "埋め込みサービス",
+    "embeddingCustomSection": "クラウドサービス",
+    "embeddingRemoteSection": "クラウドサービス",
+    "addEmbeddingProvider": "カスタムサービスを追加",
+    "laneLocal": "ローカル",
+    "laneCloud": "クラウド",
+    "presetPendingSetup": "設定する",
+    "statusReady": "利用可能",
+    "statusConfigured": "設定済み",
+    "statusNeedsKey": "APIキーが必要",
+    "setupStepCredentials": "認証情報",
+    "setupStepModels": "モデル",
+    "setupStepReady": "テストして作成",
+    "embeddingNamePlaceholder": "例：マイ埋め込みサービス",
+    "embeddingBaseUrlExtra": "OpenAI互換のベースURL（そのホストの /embeddings にリクエストを送信します）",
+    "embeddingEmptyRemote": "クラウド埋め込みサービスがありません。プリセットを設定するか、＋から独自のサービスを追加してください。",
+    "embeddingEmpty": "埋め込みモデルが設定されていません。",
+    "embeddingModelPool": "利用可能な埋め込みモデル",
+    "embeddingModelPoolTooltip": "サービスが有効で認証情報があり、少なくとも1つのモデルが有効な場合に表示されます。",
+    "embeddingModelPoolDesc": "ナレッジベースと検索では、以下のモデルを利用します。",
+    "embeddingModelPoolEmpty": "利用可能な埋め込みモデルがありません。ローカルONNXを有効にするか、クラウドサービスを設定してモデルを1つ以上有効にしてください。",
+    "embeddingPoolCtaLocal": "ローカルONNXを設定",
+    "embeddingPoolCtaCloud": "クラウドサービスを設定",
+    "embeddingPoolCtaServices": "埋め込みサービスを設定",
+    "embeddingPoolKnowledgeLink": "ナレッジベースへ",
+    "embeddingPoolRetest": "テストに失敗しました。クリックして再試行",
+    "embeddingProviderCreated": "「{{name}}」を追加しました。モデルを有効にすると上の一覧に表示されます。",
+    "embeddingFetchModelsNone": "埋め込みモデルが見つかりません（名前に embed / bge / e5 / gte が必要です）。モデルIDを手動で入力することもできます。"
   },
   "advancedSettings": {
     "description": "ランタイム設定と環境変数を管理します。",
@@ -3642,8 +3720,8 @@
       "displayNamePlaceholder": "例: 社内クラウド",
       "displayNameRequired": "表示名を入力してください",
       "displayNameHint": "チャットで相手側グループを切り替える際に表示されます。一意である必要があります",
-      "icon": "アイコン",
-      "iconHint": "相手側のエキスパートカードに表示されます(アイコン + 表示名)",
+      "icon": "アバター",
+      "iconHint": "接続先のエキスパートカードに表示されます（アバターと表示名）",
       "iconLabels": {
         "cloudy": "クラウド",
         "cloud": "クラウド(アウトライン)",
@@ -3682,7 +3760,10 @@
       "viewTable": "テーブル",
       "totalConnections": "{{count}} 件の接続",
       "colStatus": "ステータス",
-      "colAgents": "エキスパート"
+      "colAgents": "エキスパート",
+      "avatarUploadLater": "ブリッジを作成しました。アバターをアップロードできなかったため、接続の編集時に追加してください。",
+      "revealPeerInfo": "表示する（このページのみ。再読み込みすると非表示に戻ります）",
+      "hidePeerInfoAgain": "再び非表示にする"
     },
     "captcha": {
       "title": "ログイン CAPTCHA",
@@ -3873,9 +3954,9 @@
   },
   "proactiveConfig": {
     "title": "プロアクティブリマインダー",
-    "description": "AI が定期的にメモリを見直し、ちょうど良いタイミングで声をかけます。いつもあなたを気遣ってくれるアシスタントのような機能です。",
+    "description": "Octopは会話が落ち着き、ケア時間帯に入ってから話しかけます。進行中の会話には割り込みません。",
     "enabled": "プロアクティブリマインダーを有効化",
-    "enabledTip": "有効にすると、AI が保存されたメモリを定期的に見直し、話題にする価値があると判断したときに自発的にメッセージを送ります。",
+    "enabledTip": "有効にすると、Octopはケア時間帯かつ会話が落ち着いた状態になるまで待ちます。進行中の会話には割り込みません。",
     "every": "確認間隔",
     "everyTip": "AI がメモリを見直し、リマインドすべきことがないか確認する頻度です。形式: 30m、1h、2h30m",
     "everyPlaceholder": "例: 1h(1時間ごと)",
@@ -3909,7 +3990,7 @@
     "minIntervalHours": "最小間隔(時間)",
     "minIntervalMin": "最小間隔は 1 時間です",
     "minIntervalRequired": "最小間隔を入力してください",
-    "timeRangeError": "気遣い時間の開始は終了より前にしてください",
+    "timeRangeError": "開始時刻と終了時刻を同じにすることはできません。終了時刻が開始時刻より早い場合は、日付をまたぐ時間帯になります。",
     "viewEpisodes": "エピソードを開く →"
   },
   "chatWelcome": {
@@ -3989,7 +4070,8 @@
     "searching": "検索中…",
     "filesEmpty": "一致するファイルがありません",
     "filesNeedAgent": "ワークスペースのファイルをメンションするにはエージェントを起動してください",
-    "filesFailed": "ワークスペースのファイルを検索できませんでした"
+    "filesFailed": "ワークスペースのファイルを検索できませんでした",
+    "filesTruncated": "ワークスペースが大きいため、ファイル索引は一部のみです。検索結果に表示されないファイルがある場合があります"
   },
   "modelConfig": {
     "promptTitle": "モデルが必要です",
@@ -5229,7 +5311,8 @@
     "streaming": "ストリーミング中",
     "connectFailed": "ブラウザーストリームに接続できませんでした",
     "reconnect": "再接続",
-    "interactiveHint": "🖱️ ブラウザー画面上で直接、クリック、ドラッグ、スクロール、入力ができます"
+    "interactiveHint": "🖱️ ブラウザー画面上で直接、クリック、ドラッグ、スクロール、入力ができます",
+    "keyboardInput": "リモートブラウザーのキーボード入力"
   },
   "embedding": {
     "title": "ローカル埋め込み設定",
@@ -5415,21 +5498,21 @@
     "pageTitle": "ストレージ管理",
     "pageSubtitle": "エキスパートが使うローカル、オブジェクト、サンドボックス、データベースのストレージバックエンドを管理します",
     "myStorage": "マイストレージ",
-    "supportedTypes": "対応タイプ",
+    "supportedTypes": "対応するストレージの種類",
     "addBackend": "ストレージバックエンドを追加",
     "addFromTypes": "+ バックエンドを追加",
-    "goToTypes": "タイプを見る",
+    "goToTypes": "ストレージの種類を見る",
     "configure": "設定",
     "clickToConfigure": "クリックしてこのバックエンドを設定",
     "configuredBadge": "設定済み",
     "emptyMyStorage": "ストレージバックエンドはまだありません",
-    "emptyMyStorageHint": "「対応タイプ」からエキスパート用のバックエンドを選択して設定してください",
+    "emptyMyStorageHint": "「対応するストレージの種類」でエキスパート用のバックエンドを選択・設定してください",
     "emptyGuideTitle": "ストレージバックエンドはまだありません",
     "emptyGuideDesc": "ストレージバックエンドは、エキスパートが使用するワークスペース(ローカルディレクトリ、オブジェクトストア、サンドボックス、データベース)です。ここで設定し、名前を指定して割り当てます。",
     "emptyGuideStepWhat": "ストレージバックエンドとは?",
     "emptyGuideStepWhatDetail": "再利用できるストレージプロファイルです。エキスパートがファイルを読み取ったりコマンドを実行したりする際、デフォルトのホストディレクトリの代わりにこのバックエンドを使用します。",
     "emptyGuideStepHow": "追加方法",
-    "emptyGuideStepHowDetail": "「対応タイプ」を開き、ローカル、オブジェクトストレージ、サンドボックス、データベースのいずれかを選択して、認証情報またはパスを保存します。接続確認はいつでも行えます。",
+    "emptyGuideStepHowDetail": "対応するストレージの種類を開き、ローカル、オブジェクトストレージ、サンドボックス、データベースから選んで、認証情報またはパスを保存します。接続はいつでもテストできます。",
     "emptyGuideStepUse": "エキスパートでの使い方",
     "emptyGuideStepUseDetail": "エキスパートのワークスペースで、設定済みのバックエンドを名前で選択します。サンドボックスバックエンドは、エキスパートの起動時に作成され、停止時に破棄されます。",
     "totalBackends": "{{count}} 件のバックエンド",
@@ -5582,7 +5665,11 @@
     "browseLoadFailed": "サブディレクトリを読み込めませんでした",
     "browseDownloadOnly": "このファイルはプレビューできません。ダウンロードしますか?",
     "browse_not_text": "このファイルは有効なUTF-8テキストではありません。ダウンロードしてください。",
-    "browse_too_large": "ファイルが大きすぎるため、ブラウザーでプレビューまたはダウンロードできません。"
+    "browse_too_large": "ファイルが大きすぎるため、ブラウザーでプレビューまたはダウンロードできません。",
+    "featureAccessTitle": "ストレージを利用できるユーザー",
+    "featureAccessHint": "個別のバックエンドではなく、ストレージ機能全体の設定です。「全員」では設定済みのバックエンドをエキスパートに追加できます。グループ指定は新規選択を制限しますが、既に利用中のエキスパートは継続利用できます。管理者は常に利用できます。エキスパート内蔵のホストディレクトリとホストシェルには影響しません。",
+    "featureAccessSaved": "ストレージを利用できるユーザーを更新しました",
+    "featureAccessFailed": "ストレージの利用権限を更新できませんでした"
   },
   "adminAgents": {
     "total": "{{count}} 個のエージェント",
@@ -5945,7 +6032,64 @@
       "delete": "削除",
       "set_token_quota": "トークン上限の設定",
       "set_max_agents": "エキスパート数の上限の設定"
-    }
+    },
+    "tabGroups": "ユーザーグループ",
+    "groupHint": "グループはリソースを閲覧できるユーザーを制限します。編集権限は付与しません。グループを無効にすると、再度有効にするまでその付与権限が停止します。",
+    "groupCreate": "ユーザーグループを作成",
+    "groupCreateTitle": "ユーザーグループを作成",
+    "groupEditTitle": "ユーザーグループ「{{name}}」を編集",
+    "groupEmpty": "ユーザーグループがありません",
+    "groupNoMatch": "一致するユーザーグループがありません",
+    "groupSearchPlaceholder": "グループID、名前、説明、メンバーを検索",
+    "groupColId": "グループID",
+    "groupIdHint": "空欄の場合は短いIDを自動生成します。作成後は変更できません。",
+    "groupIdPlaceholder": "例：design-team",
+    "groupIdInvalid": "英数字・アンダースコア・ハイフンの3～64文字で、先頭と末尾は英数字にしてください",
+    "groupName": "名前",
+    "groupDescription": "説明",
+    "roleMemberCount": "{{count}} 人",
+    "roleMemberMore": "+{{count}}",
+    "roleMembers": "ユーザー",
+    "groupAccessTitle": "このグループが利用できるリソース",
+    "groupAccessHint": "このグループに許可されたリソースのみ表示します。範囲は各リソースのページで変更してください。",
+    "groupAccessAudienceCreator": "作成者のみ",
+    "groupAccessAudienceOwner": "所有者のみ",
+    "groupAccessUnavailable": "利用不可",
+    "groupAccessNoneYet": "なし",
+    "groupAccessSkillNote": "スキルパッケージは共有するまで作成者だけが利用できます。共有すると全員または指定グループが利用できます。",
+    "groupAccessKnowledgeNote": "未共有のナレッジベースは所有者だけが利用できます。共有すると全員または指定グループが利用できます。",
+    "groupAccessAudienceAll": "全員",
+    "groupAccessAudienceGroup": "このグループ",
+    "groupAccessEmpty": "このグループに割り当てられたリソースはありません",
+    "groupAccessGranted": "許可済み",
+    "groupAccessConnectors": "コネクター",
+    "groupAccessConnectorsOn": "コネクターを利用可能",
+    "groupAccessStorage": "ストレージ",
+    "groupAccessStorageOn": "設定済みのストレージバックエンドを選択可能",
+    "groupAccessModels": "モデル",
+    "groupAccessPlugins": "プラグイン",
+    "groupAccessSkillPackages": "スキルパッケージ",
+    "groupAccessKnowledge": "ナレッジベース",
+    "groupAccessBridges": "クラウド連携",
+    "groupAccessExperts": "エキスパート",
+    "groupAccessMissing": "リソースは既に削除されています",
+    "groupAccessMore": "+{{count}}",
+    "groupMembers": "メンバー",
+    "groupMemberCount": "{{count}} 人のメンバー",
+    "groupMemberMore": "+{{count}}",
+    "groupEnabled": "有効",
+    "groupColCreated": "作成日時",
+    "groupDeleteConfirm": "グループ「{{name}}」を削除しますか？このグループを指定したリソースの付与権限が失われます。",
+    "groupCreated": "グループを作成しました",
+    "groupUpdated": "グループを更新しました",
+    "groupDeleted": "グループを削除しました",
+    "groupSaveFailed": "グループを保存できませんでした",
+    "groupLoadFailed": "グループを読み込めませんでした",
+    "createSectionExpert": "デフォルトのエキスパート",
+    "createDefaultExpert": "デフォルトのエキスパートを作成",
+    "createDefaultExpertHint": "セットアップウィザードと招待時と同じ手順で、ユーザーと同時にエキスパートを作成します。",
+    "expertTemplate": "エキスパートのテンプレート",
+    "expertTemplateRequired": "エキスパートのテンプレートを選択してください"
   },
   "adminSso": {
     "panelTitle": "シングルサインオン",
@@ -6231,8 +6375,8 @@
     "emptyGuideStepWhatDetail": "1 インスタンス = 1 つの認証情報 + 表示名です。同じ組み込みコネクタから複数のインスタンスを作成できます。たとえば、別々のアカウントの 2 つのメールボックスなどです。",
     "emptyGuideStepHow": "作成方法",
     "emptyGuideStepHowDetail": "組み込みコネクタを開き、必要なサービスを選択して、コネクタ作成ドロワーで認証情報を入力し、プローブして保存します。保存するとこのタブに表示されます。",
-    "emptyGuideStepShare": "共有とデフォルトで有効",
-    "emptyGuideStepShareDetail": "共有すると、このインスタンスにサインインしているすべてのユーザーが選択できますが、編集できるのは所有者のみです。「デフォルトで有効」は所有者にのみ適用されます。",
+    "emptyGuideStepShare": "利用できるユーザーと初期有効設定",
+    "emptyGuideStepShareDetail": "作成時に自分のみ、全員、特定のユーザーグループから選択します。他のユーザーはアカウントを選択できますが、設定は変更できません。初期有効設定は自分にのみ適用されます。",
     "emptyGuideBrowseBuiltin": "組み込みコネクタを見る",
     "emptyGuideAddCustom": "カスタム MCP を追加",
     "noCredentials": "認証情報がありません",
@@ -6391,7 +6535,7 @@
     "displayName": "表示名",
     "description": "説明",
     "shared": "他のユーザーと共有",
-    "sharedHint": "他のユーザーは共有コネクタを選択できますが、その設定を表示したり変更したりすることはできません。",
+    "sharedHint": "コネクターの利用権限を持つユーザーがこのアカウントを選択できます。設定の閲覧・変更はできません。",
     "sharedBadge": "共有",
     "defaultEnabled": "デフォルトで有効",
     "defaultOpen": "デフォルトで有効",
@@ -6485,7 +6629,8 @@
     "weknoraFound": "ローカルの WeKnora を検出し、URL を入力しました",
     "weknoraNotFound": "Octop ホストの 127.0.0.1:8080 に WeKnora が見つかりません",
     "weknoraStep1": "WeKnora を開いて API キーを作成",
-    "weknoraStep2": "ローカルサービスを検出するか、デプロイ先の URL を手動で入力"
+    "weknoraStep2": "ローカルサービスを検出するか、デプロイ先の URL を手動で入力",
+    "visibilityHint": "自分のみ：自分と管理者が利用できます。全員：他のログイン済みユーザーも選択できますが、設定は変更できません。ユーザーグループ：共有を有効にしてから、対象グループを指定します。"
   },
   "mbtiPage": {
     "pickAgent": "先にエージェントを選択してください"
@@ -6652,7 +6797,9 @@
     "noDescription": "説明なし",
     "noToolsListed": "読み込まれたツールはありません",
     "hasUi": "チャット UI",
-    "hasConfig": "設定可能"
+    "hasConfig": "設定可能",
+    "visibilitySaved": "このプラグインの利用権限を更新しました",
+    "visibilityFailed": "このプラグインの利用権限を更新できませんでした"
   },
   "slash": {
     "fallback": {
@@ -6734,7 +6881,7 @@
     },
     "models": {
       "title": "モデル管理",
-      "subtitle": "会話・生成・音声・検索・判断用のモデルを設定"
+      "subtitle": "チャット、埋め込み、生成、音声、検索、判断用のモデルを設定"
     },
     "voice": {
       "title": "音声サービス",
@@ -7009,5 +7156,42 @@
     "step4Desc": "完了したら「结束」(または「end」)と入力して停止します。確認後、スキルがタスクの目標名で保存されます。後でその目標キーワードを入力すると再生できます。",
     "envNotReady": "先にブラウザー環境が必要です",
     "title": "スキル録画ガイド"
+  },
+  "sharedResource": {
+    "shared": "共有",
+    "from": "{{name}} から",
+    "someone": "他のユーザー"
+  },
+  "resourceAudience": {
+    "all": "すべて",
+    "local": "ローカル",
+    "cloud": "クラウド",
+    "shared": "共有",
+    "empty": "現在の条件に一致する項目はありません"
+  },
+  "avatarPicker": {
+    "presets": {
+      "skill": {
+        "package": "パッケージ"
+      }
+    }
+  },
+  "resourceVisibility": {
+    "label": "利用できるユーザー",
+    "owner": "自分のみ",
+    "all": "全員",
+    "groups": "特定のユーザーグループ",
+    "groupPlaceholder": "ユーザーグループを1つ以上選択してください",
+    "needGroup": "ユーザーグループを1つ以上選択してください",
+    "groupAccess": "グループのアクセス権",
+    "hideGroupAccess": "グループのアクセス権を隠す",
+    "groupAccessHint": "初期状態では全員が利用できます。必要に応じてユーザーグループで制限してください。管理者は常に利用できます。"
+  },
+  "textAssist": {
+    "hint": "AIで名前から生成するか、現在の文章を推敲します",
+    "action": "AIで推敲",
+    "nameRequired": "先に名前を入力してください",
+    "failed": "推敲に失敗しました。後でもう一度お試しください。",
+    "emptyResult": "モデルからの結果が空でした"
   }
 }
