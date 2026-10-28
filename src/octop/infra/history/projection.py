@@ -157,6 +157,7 @@ class TurnHistoryTracker:
 
     seed_messages: list[Any] = field(default_factory=list)
     _state_messages: list[Any] = field(default_factory=list, init=False)
+    _message_streams: dict[str, dict[str, str]] = field(default_factory=dict, init=False)
     _stream_text: str = field(default="", init=False)
     _reasoning_text: str = field(default="", init=False)
     _error_message: str = field(default="", init=False)
@@ -181,6 +182,11 @@ class TurnHistoryTracker:
                 self._state_messages = messages[last_user:]
             else:
                 self._state_messages.extend(messages)
+            return
+        if kind in ("token", "reasoning") and chunk.get("message_id"):
+            mid = str(chunk["message_id"])
+            stream = self._message_streams.setdefault(mid, {"token": "", "reasoning": ""})
+            stream[kind] += str(chunk.get("content") or "")
             return
         if kind == "token":
             self._stream_text += str(chunk.get("content") or "")
@@ -215,9 +221,9 @@ class TurnHistoryTracker:
     def _inputs_cover_stream(self, items: list[ThreadMessageInput]) -> bool:
         if not self._stream_text:
             return False
-        return any(
-            item.role in _ASSISTANT_ROLES and self._stream_text in _wire_text(item)
-            for item in items
+        texts = [_wire_text(item) for item in items if item.role in _ASSISTANT_ROLES]
+        return any(self._stream_text in text for text in texts) or self._stream_text == "".join(
+            texts
         )
 
     @property
@@ -230,6 +236,16 @@ class TurnHistoryTracker:
             source,
             dedupe_missing_ids=True,
         )
+        saved_ids = {item.message_id for item in items if item.message_id}
+        for mid, stream in self._message_streams.items():
+            if mid in saved_ids:
+                continue
+            extra = {"reasoning_content": stream["reasoning"]} if stream["reasoning"] else {}
+            partial = live_message_input(
+                AIMessage(id=mid, content=stream["token"], additional_kwargs=extra)
+            )
+            if partial is not None:
+                items.append(partial)
         if not self._inputs_cover_stream(items):
             streamed = self._stream_message()
             if streamed is not None:

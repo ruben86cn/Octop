@@ -60,6 +60,7 @@ from octop.infra.agents.settings.runtime_limits import (
 from octop.infra.agents.settings.runtime_limits import (
     resolve_context_max_tokens as config_context_max_tokens,
 )
+from octop.infra.agents.stream_replay import install_harness_stream_replay_guard
 from octop.infra.backend.docker_spec import (
     enrich_docker_backend_spec,
     inject_docker_global_environment,
@@ -96,6 +97,8 @@ if TYPE_CHECKING:
     from octop.infra.db.services import RepoBundle
     from octop.infra.proactive.scheduler import ProactiveCareScheduler
     from octop.infra.utils.paths import PathLayout
+
+install_harness_stream_replay_guard()
 
 logger = logging.getLogger(__name__)
 
