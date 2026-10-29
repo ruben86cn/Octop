@@ -82,8 +82,11 @@ def test_register_feishu_app_maps_sdk_result(monkeypatch: pytest.MonkeyPatch) ->
     assert "avatar" not in captured["app_preset"]
     assert sent["open_id"] == "ou_1"
     assert sent["greeting"] == "hello"
-    # No addons: the scan page skips the extra scope-confirmation step.
-    assert "addons" not in captured
+    assert captured["addons"] == {
+        "scopes": {"tenant": ["im:message.group_msg", "im:message:readonly", "im:resource"]}
+    }
+    # No preset=false: preserve SDK baseline messaging/event permissions.
+    assert "preset" not in captured["addons"]
 
 
 def test_cmd_create_denied(

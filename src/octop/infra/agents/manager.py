@@ -26,6 +26,7 @@ from octop.i18n.domains.agents import (
 )
 from octop.infra.agents.memory.backend import memory_backend_from_agent_config
 from octop.infra.agents.memory.slim import MemorySlimCoordinator
+from octop.infra.agents.memory.stream_isolation import install_memory_stream_isolation
 from octop.infra.agents.providers import HostModelFactory, ProviderStore, sync_providers_to_harness
 from octop.infra.agents.providers.health import ModelHealthRegistry
 from octop.infra.agents.security import SecuritySettingsStore, ToolGuardRulesStore
@@ -99,6 +100,7 @@ if TYPE_CHECKING:
     from octop.infra.utils.paths import PathLayout
 
 install_harness_stream_replay_guard()
+install_memory_stream_isolation()
 
 logger = logging.getLogger(__name__)
 

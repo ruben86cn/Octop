@@ -245,6 +245,8 @@ async def test_real_sdk_group_mention_dispatch_survives_reconnect(
     )
     channel._running = True
     channel._main_loop = asyncio.get_running_loop()
+    # Normal start() resolves identity before opening the transport.
+    channel._bot_open_id = "bot"
     received: list[Any] = []
     channel.set_enqueue_callback(received.append)
     # Typing reactions would be real HTTP; only transport/dispatch are under test.

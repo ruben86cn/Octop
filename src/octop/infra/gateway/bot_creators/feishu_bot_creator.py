@@ -236,6 +236,11 @@ def register_feishu_app(*, avatar_url: str = "", greeting: str = "") -> dict[str
         domain=str(_pcfg("accounts_domain")),
         lark_domain=str(_pcfg("lark_domain")),
         app_preset=app_preset,
+        # Increment the SDK preset so new bots can retrieve group context and
+        # original message attachments without a later manual permission edit.
+        addons={
+            "scopes": {"tenant": ["im:message.group_msg", "im:message:readonly", "im:resource"]}
+        },
         create_only=True,
     )
     if not isinstance(result, dict):

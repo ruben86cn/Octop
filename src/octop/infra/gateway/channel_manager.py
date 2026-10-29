@@ -31,6 +31,10 @@ class ChannelManager(BaseChannelManager):
             )
         from octop.infra.gateway.feishu_transport import IsolatedFeishuChannel
 
+        if isinstance(config, dict) and "group_context" not in config:
+            # Expanded history scopes also deliver unmentioned group events.
+            # Read background on demand; only explicit @ mentions start a turn.
+            config = {**config, "group_context": {"enabled": True, "history": "none"}}
         cfg = self._build_config(IsolatedFeishuChannel, config)
         return IsolatedFeishuChannel(
             processor,

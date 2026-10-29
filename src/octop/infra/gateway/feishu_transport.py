@@ -18,7 +18,8 @@ from urllib.parse import parse_qs, urlparse
 import httpx
 import lark_oapi as lark
 from lark_oapi.ws import client as sdk
-from octop_gateway.channels.feishu import FeishuChannel
+
+from octop.infra.gateway.feishu_context import FeishuContextChannel
 
 logger = logging.getLogger(__name__)
 _MIN_HEARTBEAT_TIMEOUT = 90.0
@@ -168,7 +169,7 @@ class FeishuWSClient(sdk.Client):  # type: ignore[misc]  # SDK has no type stubs
                     )
 
 
-class IsolatedFeishuChannel(FeishuChannel):
+class IsolatedFeishuChannel(FeishuContextChannel):
     """Use the normal gateway message/mention handling with isolated WS tasks."""
 
     _transport_task: asyncio.Task[None] | None = None
