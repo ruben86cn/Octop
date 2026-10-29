@@ -13,12 +13,14 @@ import aiohttp
 from octop_gateway.channels.feishu import FeishuChannel
 from octop_gateway.models import (
     ChannelSubject,
+    ContentPart,
     FileContent,
     ImageContent,
     InboundMessage,
     TextContent,
 )
 
+from octop.config import DEFAULT_MAX_UPLOAD_MB, upload_mb_to_bytes
 from octop.i18n import tr
 
 logger = logging.getLogger(__name__)
@@ -28,11 +30,44 @@ _HISTORY_LIMIT = 50
 _TEXT_LIMIT = 2000
 _CONTEXT_LIMIT = 24000
 _ATTACHMENT_LIMIT = 5
-_ATTACHMENT_BYTES = 20 * 1024 * 1024
 
 
 class FeishuContextChannel(FeishuChannel):
     """Add context only after the shared gateway has accepted an activation."""
+
+    def _parse_content_parts(
+        self, message_type: str, content_data: dict[str, Any], *, message_id: str
+    ) -> list[ContentPart]:
+        parts = super()._parse_content_parts(message_type, content_data, message_id=message_id)
+        if message_type != "post" or not message_id:
+            return parts
+        # Feishu puts attached files beside the rich-text paragraphs, including
+        # file-only posts. The same parser handles live and historical messages.
+        bodies = [content_data]
+        if not content_data.get("content"):
+            bodies.extend(
+                value
+                for value in content_data.values()
+                if isinstance(value, dict) and isinstance(value.get("content"), list)
+            )
+        seen = {part.url for part in parts if isinstance(part, FileContent)}
+        for body in bodies:
+            files = body.get("files", [])
+            if not isinstance(files, list):
+                continue
+            for attachment in files:
+                if not isinstance(attachment, dict):
+                    continue
+                key = attachment.get("file_key")
+                if not isinstance(key, str) or not key:
+                    continue
+                url = self._build_resource_url(message_id, key, resource_type="file")
+                if url not in seen:
+                    parts.append(
+                        FileContent(url=url, filename=str(attachment.get("file_name") or ""))
+                    )
+                    seen.add(url)
+        return parts
 
     def _is_bot_mentioned(self, chat_type: str, mentions: list[Any]) -> bool:
         if chat_type != "group":
@@ -206,17 +241,20 @@ class FeishuContextChannel(FeishuChannel):
         if await backend.exists(key):
             part.local_path = key
             return
+        limit = getattr(backend, "max_bytes", None)
+        if not isinstance(limit, int) or limit <= 0:
+            limit = upload_mb_to_bytes(DEFAULT_MAX_UPLOAD_MB)
         http = await self._ensure_http()
         headers = await self._get_auth_headers()
         async with http.get(part.url, headers=headers, allow_redirects=False) as response:
             response.raise_for_status()
             if response.status != 200:
                 raise ValueError("attachment_download_failed")
-            if response.content_length and response.content_length > _ATTACHMENT_BYTES:
+            if response.content_length and response.content_length > limit:
                 raise ValueError("attachment_size_limit")
             chunks = bytearray()
             async for block in response.content.iter_chunked(65536):
-                if len(chunks) + len(block) > _ATTACHMENT_BYTES:
+                if len(chunks) + len(block) > limit:
                     raise ValueError("attachment_size_limit")
                 chunks.extend(block)
             mime = response.content_type or "application/octet-stream"

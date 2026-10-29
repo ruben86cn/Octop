@@ -8,7 +8,11 @@ from octop_gateway.media import MediaBackend
 from octop_harness.backends.workspace import BackendWorkspace
 
 from octop.infra.gateway.media.constants import OUTBOUND_DIR
-from octop.infra.gateway.media.inbound_store import inbound_rel_path, validate_inbound_size
+from octop.infra.gateway.media.inbound_store import (
+    MAX_INBOUND_BYTES,
+    inbound_rel_path,
+    validate_inbound_size,
+)
 
 
 class AgentBackedMediaBackend(MediaBackend):
@@ -17,6 +21,10 @@ class AgentBackedMediaBackend(MediaBackend):
     def __init__(self, workspace: BackendWorkspace, *, max_bytes: int | None = None) -> None:
         self._workspace = workspace
         self._max_bytes = max_bytes
+
+    @property
+    def max_bytes(self) -> int:
+        return self._max_bytes if self._max_bytes is not None else MAX_INBOUND_BYTES
 
     async def save(self, data: bytes, key: str) -> None:
         validate_inbound_size(data, max_bytes=self._max_bytes)

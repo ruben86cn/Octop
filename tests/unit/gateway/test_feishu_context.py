@@ -302,7 +302,7 @@ async def test_download_rejects_oversize_before_reading_body(channel, monkeypatc
 
     class Response:
         status = 200
-        content_length = 21 * 1024 * 1024
+        content_length = 101 * 1024 * 1024
 
         def raise_for_status(self):
             pass
@@ -384,3 +384,81 @@ async def test_direct_messages_still_use_normal_pipeline(channel, monkeypatch):
     monkeypatch.setattr(BaseChannel, "_prepare_inbound", prepare)
     await channel._prepare_inbound({"chat_type": "p2p"})
     prepare.assert_awaited_once()
+
+
+@pytest.mark.parametrize("file_only", [False, True])
+def test_post_files_parsed_for_live_and_history(channel, file_only):
+    from octop_gateway.models import FileContent
+
+    body = {
+        "content": [] if file_only else [[{"tag": "text", "text": "use attached site"}]],
+        "files": [{"file_key": "zip-key", "file_name": "site.zip"}],
+    }
+    parts = channel._parse_content_parts("post", body, message_id="original")
+    files = [p for p in parts if isinstance(p, FileContent)]
+    assert len(files) == 1
+    assert files[0].filename == "site.zip"
+    assert "/messages/original/resources/zip-key?type=file" in files[0].url
+    result = channel._context_record(
+        record("original", msg_type="post", body={"content": json.dumps(body)}), "recent_message"
+    )
+    assert result["attachments"][0]["content"]["url"] == files[0].url
+
+
+def test_post_files_deduplicate_inline_and_localized_attachments(channel):
+    from octop_gateway.models import FileContent
+
+    body = {
+        "zh_cn": {
+            "content": [[{"tag": "media", "file_key": "zip-key", "file_name": "site.zip"}]],
+            "files": [{"file_key": "zip-key", "file_name": "site.zip"}, None, {}],
+        }
+    }
+    files = [
+        p
+        for p in channel._parse_content_parts("post", body, message_id="original")
+        if isinstance(p, FileContent)
+    ]
+    assert len(files) == 1
+
+
+@pytest.mark.parametrize("declared", [True, False])
+async def test_history_attachment_honors_configured_limit(channel, monkeypatch, declared):
+    from octop_gateway.models import FileContent
+
+    class Body:
+        async def iter_chunked(self, size):
+            yield b"123456"
+
+    class Response:
+        status = 200
+        content_length = 6 if declared else None
+        content_type = "application/zip"
+        content = Body()
+
+        def raise_for_status(self):
+            pass
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *args):
+            pass
+
+    backend = Mock(max_bytes=5, exists=AsyncMock(return_value=False), save=AsyncMock())
+    channel._media_backend = backend
+    monkeypatch.setattr(
+        channel, "_ensure_http", AsyncMock(return_value=Mock(get=Mock(return_value=Response())))
+    )
+    monkeypatch.setattr(channel, "_get_auth_headers", AsyncMock(return_value={}))
+    part = FileContent(
+        url="https://open.feishu.cn/open-apis/im/v1/messages/original/resources/key?type=file",
+        filename="site.zip",
+    )
+    with pytest.raises(ValueError, match="attachment_size_limit"):
+        await channel._download_context_attachment(part)
+    backend.save.assert_not_awaited()
+    backend.max_bytes = 6
+    await channel._download_context_attachment(part)
+    assert part.size == 6
+    backend.save.assert_awaited_once()
