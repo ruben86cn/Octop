@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Segmented, Steps, Typography } from "antd";
 import { Lock, UserCog, Cpu, CheckCircle, Wand2, Database } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import cx from "classnames";
 import { ensureLocaleBundle } from "../../i18n";
 import {
   normalizeUiLocale,
@@ -161,6 +162,11 @@ export default function SetupPage() {
     goToStep(STEP_DATABASE);
   };
 
+  const handleDatabaseAdopted = () => {
+    wizardSession.clearAll();
+    navigate("/login", { replace: true });
+  };
+
   const handleDatabaseContinue = async () => {
     try {
       await ensureWizardToken();
@@ -254,9 +260,10 @@ export default function SetupPage() {
   return (
     <div className={styles.wizardShell}>
       <div
-        className={`${styles.wizardCard} ${
-          isModelStep ? styles.wizardCardWide : styles.wizardCardNarrow
-        }`}
+        className={cx(
+          styles.wizardCard,
+          isModelStep ? styles.wizardCardWide : styles.wizardCardNarrow,
+        )}
       >
         <div className={styles.wizardHeader}>
           <div className={styles.wizardHeaderTop}>
@@ -298,9 +305,10 @@ export default function SetupPage() {
         </div>
 
         <div
-          className={`${styles.wizardBody} ${
-            isModelStep ? styles.wizardBodyFlush : ""
-          }`}
+          className={cx(
+            styles.wizardBody,
+            isModelStep && styles.wizardBodyFlush,
+          )}
         >
           {current === STEP_PASSWORD && passwordRequired && (
             <PasswordStep onVerified={handlePasswordVerified} />
@@ -308,6 +316,7 @@ export default function SetupPage() {
           {current === STEP_DATABASE && (
             <DatabaseStep
               onContinue={() => void handleDatabaseContinue()}
+              onAdopted={handleDatabaseAdopted}
               onBack={passwordRequired ? handleBackFromDatabase : undefined}
             />
           )}

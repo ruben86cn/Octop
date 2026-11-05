@@ -1,10 +1,11 @@
-# Fork customizations on 1.0.3b1
+# Fork customizations on 1.0.3b3
 
 Original base: `f79015b078c4d5d4c309a1bf6f3cd39ac06cc18f` (official main, B8 plus
 knowledge-work expert templates, PR #2021). Updated by merging official `main`
 `dd9dce4` (v1.0.2) on 2026-10-19. Both the original customization commit and
 the official release remain ancestors. The 2026-10-26 merge adds official main
-`890111b` (v1.0.3b1); see the verification record below.
+`890111b` (v1.0.3b1). The 2026-11-05 merge adds official release
+`4811eb45` (v1.0.3b3); see the verification records below.
 
 ## Contents
 
@@ -116,3 +117,30 @@ Do not replace `src/octop` or a newer harness with copied old installations.
   and 71 warnings. These upstream baseline failures remain outside this merge.
 - Full backend `make all PYTEST_JOBS=4` passed: Ruff, mypy (613 source files),
   5,184 tests passed / 35 skipped. TypeScript and Vite production build passed.
+
+### 1.0.3b3 upstream merge (2026-11-05)
+
+- Merged official release `v1.0.3b3` at `4811eb45`, including the intervening
+  b2 changes. Recovery branch: `backup/pre-v1.0.3b3-20261105` at `3c6fbc4`.
+- Resolved the user-creation conflict by keeping Japanese UI locale normalization
+  and upstream passwordless LDAP account reservation behavior together.
+- Preserved the external MCP gateway, feedback approvals, optional relay,
+  Feishu connection isolation, explicit mention gating, 30-minute contextual
+  history/quoted attachments, current-speaker open_id injection, memory stream
+  isolation, and retry-history replay guard. Production deployment must retain
+  the custom ChannelManager import as well as its implementation modules.
+- Added 174 Japanese strings, updated 23, and removed eight retired keys to
+  match the new authentication, account security, market, and storage screens.
+- Development dependencies use Harness 1.0.7, Memory 1.0.3, and Gateway 1.0.3.
+  No running service, production dependency, database, or channel was changed.
+  Deployment requires a separate backup and verification of schema v25 changes.
+- Locale/key/interpolation tests: 83 passed. External MCP gateway: 75 passed;
+  extension/plugin Ruff checks passed. Frontend locale preferences: 7 passed.
+- Dashboard TypeScript and Vite production build passed. Frontend ESLint still
+  reports two errors and 71 warnings; an untouched `v1.0.3b3` worktree reproduces
+  the same two errors in `constants.test.ts` and `chatStore.ts`. They are not
+  introduced by the merge and were left unchanged.
+- Live provider calls, real IM delivery, Windows execution, and production
+  database migration are not covered by these local merge checks.
+- Full backend ship gate `make all PYTEST_JOBS=4` passed: Ruff, mypy
+  (654 source files), and 5,410 tests passed / 40 skipped.
