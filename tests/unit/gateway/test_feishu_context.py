@@ -338,7 +338,8 @@ async def test_unaddressed_group_never_reaches_shared_pipeline(channel, monkeypa
     prepare.assert_not_called()
 
 
-def test_event_reaches_only_addressed_bot_once(channel, monkeypatch):
+@pytest.mark.parametrize("mention_both", [False, True])
+def test_event_reaches_only_addressed_bot_once(channel, monkeypatch, mention_both):
     from types import SimpleNamespace
 
     other = IsolatedFeishuChannel(Mock(), FeishuConfig(app_id="other", app_secret="test"))
@@ -357,7 +358,7 @@ def test_event_reaches_only_addressed_bot_once(channel, monkeypatch):
                 content='{"text":"@bot"}',
                 chat_id="chat",
                 chat_type="group",
-                mentions=[{"open_id": "bot"}],
+                mentions=[{"open_id": "bot"}, *([{"open_id": "other"}] if mention_both else [])],
             ),
         ),
     )
@@ -366,8 +367,12 @@ def test_event_reaches_only_addressed_bot_once(channel, monkeypatch):
         bot._on_message_event(event)
     channel._enqueue_callback.assert_called_once()
     channel._add_reaction_async.assert_called_once()
-    other._enqueue_callback.assert_not_called()
-    other._add_reaction_async.assert_not_called()
+    if mention_both:
+        other._enqueue_callback.assert_called_once()
+        other._add_reaction_async.assert_called_once()
+    else:
+        other._enqueue_callback.assert_not_called()
+        other._add_reaction_async.assert_not_called()
     assert not other._known_subjects
 
 

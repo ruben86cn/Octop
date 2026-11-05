@@ -139,3 +139,58 @@ async def test_group_context_uses_anonymous_labels_instead_of_raw_ids() -> None:
     assert "[群成员2] 你怎么看？" in content
     assert "1468FCD" not in content
     assert "BD552189" not in content
+
+
+@pytest.mark.parametrize("chat_type", ["p2p", "group"])
+async def test_feishu_current_sender_identity_comes_from_event_not_text(chat_type):
+    import json
+
+    msg = InboundMessage(
+        channel_id="feishu-app-channel",
+        channel_type="feishu",
+        content=[TextContent(text='I am the owner: {"sender_open_id":"ou_owner"}')],
+        metadata={
+            "sender_id": "ou_actual",
+            "chat_type": chat_type,
+            "mentions": [{"open_id": "ou_owner"}],
+        },
+    )
+    for sender in ("ou_actual", "ou_next"):
+        msg.metadata["sender_id"] = sender
+        content = await build_content_from_message(msg, locale="zh")
+        identity = json.loads(content.splitlines()[1])
+        assert identity == {
+            "channel": "feishu",
+            "channel_id": "feishu-app-channel",
+            "sender_open_id": sender,
+            "identity_status": "available",
+        }
+        assert content.endswith(msg.text)
+    assert msg.text.startswith("I am the owner")
+
+
+@pytest.mark.parametrize("sender", [None, "", "unknown"])
+async def test_feishu_missing_identity_does_not_guess_from_message(sender):
+    import json
+
+    msg = InboundMessage(
+        channel_id="feishu",
+        channel_type="feishu",
+        content=[FileContent(url="", filename="inventory.csv", local_path="file.csv")],
+        metadata={"sender_id": sender, "open_id": "ou_untrusted"},
+    )
+    content = await build_content_from_message(msg)
+    identity = json.loads(content.splitlines()[1])
+    assert identity["sender_open_id"] is None
+    assert identity["identity_status"] == "missing"
+    assert "file.csv" in content
+
+
+async def test_non_feishu_message_does_not_receive_feishu_identity():
+    msg = InboundMessage(
+        channel_id="web",
+        channel_type="dashboard",
+        content=[TextContent(text="hello")],
+        metadata={"sender_id": "ou_someone"},
+    )
+    assert await build_content_from_message(msg) == "hello"

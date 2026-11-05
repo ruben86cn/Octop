@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+import json
 from collections.abc import Sequence
 from typing import Any
 
 from octop_gateway.media import MediaBackend
 from octop_gateway.models import ContentPart, FileContent, ImageContent, InboundMessage, TextContent
 
+from octop.i18n import tr
 from octop.i18n.domains.attachment import (
     attachment_empty_image,
     attachment_empty_message,
@@ -191,6 +193,28 @@ async def build_content_from_message(
     extracted = await _extracted_document_texts(msg, media_backend=media_backend, locale=locale)
     current_text = "\n\n".join(part for part in [msg.text or "", *file_hints, *extracted] if part)
     combined_text = _group_turn_text(msg, current_text, workspace=workspace, locale=locale)
+
+    if msg.channel_type == "feishu":
+        # Feishu's adapter obtains sender_id from event.sender.sender_id.open_id.
+        # Never infer the current actor from text, mentions, quotes or the owner.
+        sender = msg.metadata.get("sender_id")
+        open_id = sender.strip() if isinstance(sender, str) else ""
+        if open_id == "unknown":
+            open_id = ""
+        identity = json.dumps(
+            {
+                "channel": "feishu",
+                "channel_id": msg.channel_id,
+                "sender_open_id": open_id or None,
+                "identity_status": "available" if open_id else "missing",
+            },
+            ensure_ascii=False,
+        )
+        combined_text = (
+            tr("channel.feishu_sender_identity", locale, identity=identity)
+            + "\n"
+            + (combined_text or attachment_empty_message(locale))
+        )
 
     if not image_blocks:
         return combined_text or attachment_empty_message(locale)
